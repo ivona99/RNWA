@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style1.css">
+    <title>SAKILA DATABASE</title>
+    <style>
+      #customers {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #customers tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #customers tr:hover {background-color: #ddd;}
+  
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #89a0c2;
+    color: white;
+  }
+  </style>
+  
+  <script>
+      var ajax= new XMLHttpRequest();
+      var method="GET";
+      var url="data.php";
+      var asynchronous=true;
+  
+      ajax.open(method,url,asynchronous);
+      ajax.send();
+  
+      ajax.onreadystatechange=function()
+      {
+          if(this.readyState==4 && this.status==200)
+          {
+              var data=JSON.parse(this.responseText);
+              console.log(data);
+  
+              var html="";
+              for(var a=0; a<data.length; a++){
+                  var firstName=data[a].first_name;
+                  var lastName=data[a].last_name;
+                  var email=data[a].email;
+                  html+="<tr>";
+                   html+="<td>" + firstName + "</td>";
+                   html+="<td>" + lastName + "</td>";
+                   html+="<td>" + email + "</td>";
+                  html+="</tr>";
+  
+                  document.getElementById("data").innerHTML=html;
+                 
+  }
+  
+              
+          }
+      
+      }
+  
+      function showHint(str) {
+      if (str.length == 0) { 
+          var data=JSON.parse(this.responseText);
+              console.log(data);
+  
+              var html="";
+              for(var a=0; a<data.length; a++){
+                  var firstName=data[a].first_name;
+                  var lastName=data[a].last_name;
+                  var email=data[a].email;
+                  html+="<tr>";
+                   html+="<td>" + firstName + "</td>";
+                   html+="<td>" + lastName + "</td>";
+                   html+="<td>" + email + "</td>";
+                  html+="</tr>";
+  
+                  document.getElementById("data").innerHTML=html;
+                  
+  }return;
+          
+      } else {
+          ajax.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+                  document.getElementById("data").innerHTML = ajax.responseText;
+                  document.getElementById("cust").remove();
+              }
+          }
+          ajax.open("GET", "data1.php?s=" + str, true);
+          ajax.send();
+      }
+  } 
+  </script>
+ 
+</head>
+
+<body style="font-family: 'Roboto', sans-serif;">
+    <header>
+        <div class="row">
+            
+             <div class="column left">
+                <img src="logo.jpg" alt="logo" width="95" height="85"><h2>SAKILA DATABASE</h2>
+               
+               
+             </div>
+            <div class="column right">
+               <button class="login"><a class="btn" href="">Prijava</a></button>
+              <button class="login"><a class="btn" href="">Registaracija</a></button>
+            </div>
+          </div>
+    </header>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="http://fsre.sum.ba/naslovnica/">FSRE</a></li>
+        <li><a href="http://moodle.fsre.sum.ba/">e-Learning</a></li>
+        <li><a href="https://github.com/ivona99/RNWA">Github projektnog tima</a></li>
+      </ul>
+  <div class="row">
+    <div class="column one col-9 col-s-9">
+      <h3>Naziv projekta - SAKILA DATABASE </h3>
+          <h4>Opis projekta: <a href="https://dev.mysql.com/doc/sakila/en/sakila-structure.html" > https://dev.mysql.com/doc/sakila/en/sakila-structure.html </a> </h4>
+          <h4>Download and Install: <a href="https://dev.mysql.com/doc/sakila/en/sakila-installation.html" > https://dev.mysql.com/doc/sakila/en/sakila-installation.html</a> </h4>
+          <p style="text-align:justify;">Uzorak baze podataka Sakila u početku je razvio Mike Hillyer, bivši član MySQL AB dokumentacijskog tima, a namijenjen je pružanju standardne sheme koja se može koristiti za primjere u knjigama, vodičima, člancima, uzorcima i tako dalje. Uzorak baze podataka Sakila također služi za isticanje značajki MySQL-a poput prikaza, pohranjenih postupaka i okidača.
+
+            Dodatne informacije o uzorku baze podataka Sakila i njezinoj upotrebi mogu se naći putem <a href="https://forums.mysql.com/index.php">MySQL foruma</a> .</p>
+            <br>
+            <h3>Povijest</h3>
+            <p style="text-align:justify;">Uzorak baze podataka Sakila dizajniran je kao zamjena za svjetsku bazu podataka uzoraka, koju je također pružio Oracle.
+
+              Svjetska baza podataka uzoraka nudi niz tablica koje sadrže informacije o zemljama i gradovima svijeta i korisna je za osnovne upite, ali nedostaju strukture za testiranje funkcionalnosti i značajki specifičnih za MySQL koje se nalaze u MySQL 5 i novijim verzijama.
+              
+              Razvoj uzorka baze podataka Sakila započeo je početkom 2005. Rani dizajni temeljili su se na bazi podataka korištenoj u Dellovoj tehničkoj knjizi Tri pristupa MySQL aplikacijama na Dell PowerEdge poslužiteljima.
+              
+              Tamo gdje je Dellova baza podataka uzoraka dizajnirana da predstavlja internetsku DVD trgovinu, Sakila baza podataka uzoraka dizajnirana je da predstavlja trgovinu DVD-a za iznajmljivanje. Uzorak baze podataka Sakila i dalje posuđuje imena filmova i glumaca iz baze podataka Dell.
+              
+              Razvoj je postignut korištenjem MySQL Query Browser-a za dizajn sheme, s tim da su tablice popunjene kombinacijom MySQL Query Browser-a i prilagođenih skripti, uz napore suradnika.
+              
+              Nakon završetka osnovne sheme, u shemu su dodani razni pogledi, pohranjene rutine i okidači; zatim su popunjeni uzorci podataka. Nakon niza verzija pregleda, prva službena verzija uzorka baze podataka Sakila objavljena je u ožujku 2006.</p>
+              <h3>Instalacija</h3>
+              <p style="text-align:justify;">
+                Uzorak baze podataka Sakila dostupan je na <a href="https://dev.mysql.com/doc/index-other.html">https://dev.mysql.com/doc/index-other.html</a> . Arhiva za preuzimanje dostupna je u komprimiranoj tar datoteci ili Zip formatu. Arhiva sadrži tri datoteke: sakila-schema.sql, sakila-data.sql i sakila.mwb.
+                Datoteka sakila-schema.sql sadrži sve izraze CREATE potrebne za stvaranje strukture baze podataka Sakila, uključujući tablice, poglede, pohranjene procedure i okidače. Datoteka sakila-data.sql sadrži izjave INSERT potrebne za popunjavanje strukture stvorene datotekom sakila-schema.sql, zajedno s definicijama okidača koji se moraju stvoriti nakon početnog učitavanja podataka.
+
+                Datoteka sakila.mwb je MySQL Workbench podatkovni model koji možete otvoriti u MySQL Workbenchu da biste ispitali strukturu baze podataka. Za više informacija pogledajte <a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a> . Za detaljnije upute i korake instalacije posjetite link: <a href="https://dev.mysql.com/doc/sakila/en/sakila-installation.html">https://dev.mysql.com/doc/sakila/en/sakila-installation.html</a><br><br>
+                
+              </p>
+              <br><br><br>
+              <div style="background-color: rgb(190, 196, 190);">
+                <p><b>Krenite tipkati ime ili prezime kupca:</b></p>
+<form> 
+Ime ili Prezime: <input type="text" onkeyup="showHint(this.value)">
+</form>
+<p>Rezultat:<br> <span id="txtHint" style="color:red"></span></p>
+<table id="customers">
+    <tr id="cust">
+        <th>Ime</th>
+        <th>Prezime</th>
+        <th>Email</th>
+    </tr>
+    <tbody id="data"></tbody>
+</table>  
+              </div>
+    </div>
+    <div class="column two col-3 col-s-3 ">
+      <h2>Što je SAKILA Database?<br></h2>
+      <br><br><br><br>
+          <h5 style="text-align:left;"> Sakila baza podataka, koju je izvorno stvorio MySQL i otvorena je pod uvjetima BSD licence.
+
+            Baza podataka Sakila lijepo je normalizirana shema koja modelira trgovinu za iznajmljivanje DVD-a, a sadrži stvari poput filmova, glumaca, odnosa film-glumac i središnju tablicu inventara koja povezuje filmove, trgovine i posudbe.</h5>
+          <br> 
+    </div>
+  </div>
+<br>
+  <footer>
+    <p>PROJEKTNI TIM 4: <br>  Ivona Škobić 
+    <a href="mailto:ivona.skobic@student.fsre.ba" > ivona.skobic@student.fsre.ba</a><br> Ivona Lozić
+    <a href="mailto:ivona.lozic@student.fsre.ba" > ivona.lozic@student.fsre.ba</a> </p>
+  
+  </footer>
+</body>
+</html>
