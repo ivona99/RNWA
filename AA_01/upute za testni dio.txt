@@ -1,0 +1,2 @@
+Korisničko ime: admin
+Zaporka: lozinka123
